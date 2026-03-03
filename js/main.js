@@ -23,7 +23,7 @@ let app = new Vue({
         sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
         cart: 0
     },
-    method: {
+    methods: {
         addToCart (){
             this.cart += 1
         }
