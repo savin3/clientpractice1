@@ -18,9 +18,7 @@ Vue.component('product', {
                 <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
                 <p v-else :class="{ outOfStock: !inStock }">Out of stock</p>
                 <p>{{ sale }}</p>
-                <ul>
-                    <li v-for="detail in details">{{ detail }}</li>
-                </ul>
+                <product-details :details="details"></product-details>
                 
                 <p>Shipping {{ shipping }}</p>
                 
@@ -115,6 +113,20 @@ Vue.component('product', {
             }
         }
     }
+})
+
+Vue.component('product-details', {
+    props: {
+        details: {
+            type: Array,
+            required: true
+        }
+    },
+    template: `
+        <ul>
+            <li v-for="detail in details">{{ detail }}</li>
+        </ul>
+    `
 })
 
 
