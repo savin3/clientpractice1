@@ -82,7 +82,7 @@ Vue.component('product', {
             console.log(index);
         },
         deletedFromCart() {
-            this.cart -= 1
+            this.$emit('deleted-from-cart', this.variants[this.selectedVariant].variantId);
         }
     },
     computed: {
@@ -135,6 +135,9 @@ let app = new Vue({
     methods: {
         updateCart(id) {
             this.cart.push(id);
+        },
+        deletedCart(id) {
+            this.cart.pop();
         }
     }
 })
