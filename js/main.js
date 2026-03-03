@@ -30,7 +30,7 @@ let app = new Vue({
             this.cart += 1
         },
         updateProduct(variantImage) {
-            this.Image = variantImage
+            this.image = variantImage
         }
     }
 })
