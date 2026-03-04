@@ -91,3 +91,8 @@ textarea {
 .outOfStock {
     text-decoration: line-through;
 }
+
+span.tab {
+    display: inline-block;
+    margin-right: 20px;
+}

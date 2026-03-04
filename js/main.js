@@ -44,20 +44,7 @@ Vue.component('product', {
                 <button @click="deletedFromCart">Delete from cart</button>
             </div>
             
-            <div>
-                <h2>Reviews</h2>
-                <p v-if="!reviews.length">There are no reviews yet.</p>
-                <ul>
-                  <li v-for="review in reviews">
-                  <p>{{ review.name }}</p>
-                  <p>Rating: {{ review.rating }}</p>
-                  <p>{{ review.review }}</p>
-                  <p>Recommended: {{ review.recommended }}</p>
-                  </li>
-                </ul>
-            </div>
-            
-            <product-review @review-submitted="addReview"></product-review>
+            <product-tabs :reviews="reviews" @review-submitted="addReview"></product-tabs>
         </div>
     `,
     data() {
@@ -219,6 +206,49 @@ Vue.component('product-review', {
     }
 })
 
+Vue.component('product-tabs', {
+    props: {
+        reviews: {
+            type: Array,
+            required: false
+        }
+    },
+    template: `
+   <div>   
+     <ul>
+       <span class="tab" :class="{ activeTab: selectedTab === tab }"
+             v-for="(tab, index) in tabs"
+             @click="selectedTab = tab"
+       >{{ tab }}</span>
+     </ul>
+     <div v-show="selectedTab === 'Reviews'">
+        <p v-if="!reviews.length">There are no reviews yet.</p>
+        <ul>
+            <li v-for="review in reviews">
+                <p>{{ review.name }}</p>
+                <p>Rating: {{ review.rating }}</p>
+                <p>{{ review.review }}</p>
+                <p>Recommended: {{ review.recommended }}</p>
+            </li>        
+        </ul>
+     </div>
+     <div v-show="selectedTab === 'Make a Review'">
+        <product-review @review-submitted="addReview"></product-review>
+     </div>
+   </div>>
+ `,
+    data() {
+        return {
+            tabs: ['Reviews', 'Make a Review'],
+            selectedTab: 'Reviews'
+        }
+    },
+    methods: {
+        addReview(review) {
+            this.$emit('review-submitted', review);
+        }
+    }
+})
 
 
 let app = new Vue({
