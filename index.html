@@ -13,6 +13,14 @@
     <div id="app">
         <div class="cart">
             <p>Cart({{ cart.length }})</p>
+
+            <p v-if="cart.length > 0">
+                Total: ${{ cartTotal.total }}
+
+                <span v-if="cartTotal.hasDiscount">
+                    (Saved {{ cartTotal.discount }})
+                </span>
+            </p>
         </div>
         <product :premium="premium" @add-to-cart="updateCart" @deleted-from-cart="deletedCart"></product>
     </div>

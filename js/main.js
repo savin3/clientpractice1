@@ -289,7 +289,26 @@ let app = new Vue({
     el: '#app',
     data: {
         premium: true,
-        cart: []
+        cart: [],
+        price: 5.00
+    },
+    computed: {
+        cartTotal() {
+            const count = this.cart.length;
+            const sum = count * this.price;
+
+            if (count >= 4) {
+                return {
+                    total: (sum * 0.8).toFixed(2),
+                    discount: (sum * 0.2).toFixed(2),
+                    hasDiscount: true
+                };
+            }
+            return {
+                total: sum.toFixed(2),
+                hasDiscount: false
+            };
+        }
     },
     methods: {
         updateCart(id) {
