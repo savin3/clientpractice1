@@ -20,9 +20,7 @@ Vue.component('product', {
                 <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
                 <p v-else :class="{ outOfStock: !inStock }">Out of stock</p>
                 <p>{{ sale }}</p>
-                <product-details :details="details"></product-details>
-                
-                <p>Shipping {{ shipping }}</p>
+               
                 
                 <div
                         class="color-box"
@@ -46,7 +44,7 @@ Vue.component('product', {
                 <button @click="deletedFromCart">Delete from cart</button>
             </div>
             
-            <product-tabs :reviews="reviews" @review-submitted="addReview"></product-tabs>
+            <product-tabs :reviews="reviews" :shipping="shipping" :details="details" @review-submitted="addReview"></product-tabs>
         </div>
     `,
     data() {
@@ -217,6 +215,14 @@ Vue.component('product-tabs', {
         reviews: {
             type: Array,
             required: false
+        },
+        shipping: {
+            type: [String, Number],
+            required: true
+        },
+        details: {
+            type: Array,
+            required: true
         }
     },
     template: `
@@ -241,11 +247,33 @@ Vue.component('product-tabs', {
      <div v-show="selectedTab === 'Make a Review'">
         <product-review></product-review>
      </div>
-   </div>>
+     <div v-show="selectedTab === 'Details'">
+        <ul>
+            <li v-for="detail in details">{{ detail }}</li>
+        </ul>
+     </div>
+       
+     <div v-show="selectedTab === 'Shipping'">
+        <p>{{ shipping }}</p>
+     </div>
+     
+   </div>
+   
+   <div>
+       <div v-show="selectedTab === 'Details'">
+            <ul>
+                <li v-for="detail in details">{{ detail }}</li>
+            </ul>
+       </div>
+       
+       <div v-show="selectedTab === 'Shipping'">
+            <p>{{ shipping }}</p>
+       </div>
+   </div>
  `,
     data() {
         return {
-            tabs: ['Reviews', 'Make a Review'],
+            tabs: ['Reviews', 'Make a Review', 'Shipping', 'Details'],
             selectedTab: 'Reviews'
         }
     },
