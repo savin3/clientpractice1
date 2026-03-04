@@ -89,14 +89,14 @@ Vue.component('product', {
         deletedFromCart() {
             this.$emit('deleted-from-cart', this.variants[this.selectedVariant].variantId);
         },
+        addReview(productReview) {
+            this.reviews.push(productReview)
+        }
+    },
+    mounted() {
         eventBus.$on('review-submitted', productReview => {
             this.reviews.push(productReview)
-        }),
-        mounted() {
-            eventBus.$on('review-submitted', productReview => {
-                this.reviews.push(productReview)
-            })
-        }
+        })
     },
     computed: {
         title () {
